@@ -6,16 +6,16 @@
 ## Potential functions to implement
 
 ### General Use
- - Convert OpenFlight data into internal representation. Probably directly to graph.
-  - Matrix? Vectors of pointers?
+ * Convert OpenFlight data into internal representation. Probably directly to graph.
+   * Matrix? Vectors of pointers?
 
 ### Dijkstra's Algorithm
- - Create graph with distance/time edges.
-  - Calculate distance/time based on provided location data
- - Actually run Dijkstra's
-  - Potentially choose to prioritize time or distance
+ * Create graph with distance/time edges.
+   * Calculate distance/time based on provided location data
+ * Actually run Dijkstra's
+   * Potentially choose to prioritize time or distance
 
 ### PageRank Algorithm
- - Create graph with "bandwidth" edges (number of routes in between).
- - Actually run PageRank
-  - Learn how to actually run Pagerank
+ * Create graph with "bandwidth" edges (number of routes in between).
+ * Actually run PageRank
+   * Learn how to actually run Pagerank
