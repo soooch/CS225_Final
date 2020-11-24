@@ -1,7 +1,7 @@
 # Final Project | wkolcan2, guoyang2, bwl3, skavi2
 
-[Goals](GOALS.pdf)  
-[Contract](CONTRACT_skavi2.pdf)
+[Goals](docs/GOALS.pdf)  
+[Contract](docs/CONTRACT_skavi2.pdf)
 
 ## Potential functions to implement
 
