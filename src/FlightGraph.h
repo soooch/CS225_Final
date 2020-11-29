@@ -3,12 +3,11 @@
 #include <unordered_map>
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 class FlightGraph {
   public:
-  FlightGraph();
-  //FlightGraph(std::string airportsFilename);
-  //FlightGraph(std::string airportsFilename, std::string routesFilename);
+  FlightGraph(std::string airportsFilename, std::string routesFilename);
   
   private:
   std::vector<std::vector<int>> routes;
