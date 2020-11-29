@@ -20,15 +20,12 @@ run:
 		@echo "🚀 Running..."
 		$(addprefix ./$(BIN_DIR)/, $(TARGETS))
 		
-PortRank : $(SRCS_O) PortRank.o
+$(TARGETS) : $(SRCS_O)
 		@echo "🏗 Building $@"
+		$(CXX) $(CXX_FLAGS) -c -o $(BIN_DIR)/$@.o $(SRC_DIR)/$@.cpp
 		$(CXX) $(CXX_FLAGS) $(LD_FLAGS) -o $(BIN_DIR)/$@ $(BIN_DIR)/$(addsuffix .o, $@) $(addprefix $(BIN_DIR)/, $(SRCS_O))
 
-Dijkstra : $(SRCS_O) Dijkstra.o
-		@echo "🏗 Building $@"
-		$(CXX) $(CXX_FLAGS) $(LD_FLAGS) -o $(BIN_DIR)/$@ $(BIN_DIR)/$(addsuffix .o, $@) $(addprefix $(BIN_DIR)/, $(SRCS_O))
-
-$(OBJS):
+$(SRCS_O):
 		$(CXX) $(CXX_FLAGS) -c -o $(BIN_DIR)/$@ $(SRC_DIR)/$(patsubst %.o,%.cpp, $@)
 		
 .PHONY: clean run
