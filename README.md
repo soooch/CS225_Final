@@ -1,15 +1,21 @@
-# wkolcan2-skavi2-guoyang2-bwl3
-Final project
+# Final Project | wkolcan2, guoyang2, bwl3, skavi2
+
+[Goals](docs/GOALS.pdf)  
+[Contract](docs/CONTRACT_skavi2.pdf)
 
 ## Potential functions to implement
 
 ### General Use
- - Read OpenFlight data into internal representation. Probably directly to graph.
+ * Convert OpenFlight data into internal representation. Probably directly to graph.
+   * Matrix? Vectors of pointers?
 
 ### Dijkstra's Algorithm
- - Create graph with distance/time edges.
- - Actually run Dijkstra's
+ * Create graph with distance/time edges.
+   * Calculate distance/time based on provided location data
+ * Actually run Dijkstra's
+   * Potentially choose to prioritize time or distance
 
 ### PageRank Algorithm
- - Create graph with "bandwidth" edges (number of routes in between).
- - Actually run PageRank
+ * Create graph with "bandwidth" edges (number of routes in between).
+ * Actually run PageRank
+   * Learn how to actually run Pagerank
