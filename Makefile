@@ -1,4 +1,4 @@
-CXX       := clang++
+CXX       := g++
 CXX_FLAGS := -Wall -Wextra -g -std=c++17
 LD_FLAGS  := 
 
