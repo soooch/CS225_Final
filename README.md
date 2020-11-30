@@ -12,6 +12,7 @@
 ### Dijkstra's Algorithm
  * Create graph with distance/time edges.
    * Calculate distance/time based on provided location data
+   * Need a function that calculates route time and/or distance (edge weight) from coordinates, num. of stops, and airplane type.
  * Actually run Dijkstra's
    * Potentially choose to prioritize time or distance
 
