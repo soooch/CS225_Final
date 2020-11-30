@@ -6,10 +6,15 @@
 #include <sstream>
 
 class FlightGraph {
+  private:
+  struct Airport {
+    std::string name, city, country;
+  };
+
   public:
   FlightGraph(std::string airportsFilename, std::string routesFilename);
   
   private:
-  std::vector<std::vector<int>> routes;
-  std::vector<std::string> airports;
+  std::unordered_map<int, std::vector<int>> routes;
+  std::unordered_map<int, Airport> airports;
 };

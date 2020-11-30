@@ -8,7 +8,6 @@ SRC_DIR  	:= src
 TARGETS 	:= PortRank Dijkstra
 SRCS    	:= FlightGraph
 SRCS_O  	:= $(addsuffix .o, $(SRCS))
-OBJS      := $(addsuffix .o, $(TARGETS)) $(SRCS_O)
 
 all : $(TARGETS)
 
