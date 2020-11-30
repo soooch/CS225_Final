@@ -86,9 +86,10 @@ FlightGraph::FlightGraph(std::string airportsFilename, std::string routesFilenam
       //airlineID = stoi(airlineID_str);
       //stops = stoi(stops_str);
 
-      //std::cout << airports[srcAPID].name << " -> " << airports[destAPID].name << std::endl;
-
-      airports[srcAPID].routes.push_back(destAPID);
+      // if not already added airports, don't add to graph
+      if (airports.count(srcAPID) != 0 && airports.count(destAPID) != 0) {
+        airports[srcAPID].routes.push_back(destAPID);
+      }
     }
   }
 }
