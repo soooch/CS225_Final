@@ -10,6 +10,7 @@ class FlightGraph {
   struct Airport {
     std::string name, city, country;
     std::vector<int> routes;
+	double latitude, longitude;
   };
 
   FlightGraph(std::string airportsFilename, std::string routesFilename);
