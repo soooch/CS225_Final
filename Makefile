@@ -1,5 +1,5 @@
 CXX       := clang++
-CXX_FLAGS := -Wall -Wextra -g -std=c++17
+CXX_FLAGS := -Wall -Wextra -g -std=c++1y
 LD_FLAGS  := 
 
 BIN_DIR  	:= bin
