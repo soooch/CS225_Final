@@ -45,16 +45,16 @@ FlightGraph::FlightGraph(std::string airportsFilename, std::string routesFilenam
     ss.ignore(256, ',');
     
     int ID;//, altitude, timezone;
-    //float latitude, longitude;
+    double latitude, longitude;
 
     ID = stoi(ID_str);
     // Don't need right now, but might be helpful later
     //altitude = stoi(altitude_str);
-    //latitude = stod(latitude_str);
-    //longitude = stod(longitude_str);
+    latitude = stod(latitude_str);
+    longitude = stod(longitude_str);
     
     // your IDE may show this is an error. It is not, this is a valid assignment
-    airports[ID] = Airport {name, city, country, std::vector<int>()};
+    airports[ID] = Airport {name, city, country, std::vector<int>(), latitude, longitude};
   }
 
   airportsFile.close();
