@@ -48,10 +48,13 @@ FlightGraph::FlightGraph(std::string airportsFilename, std::string routesFilenam
     //float latitude, longitude;
 
     ID = stoi(ID_str);
+    // Don't need right now, but might be helpful later
     //altitude = stoi(altitude_str);
     //latitude = stod(latitude_str);
     //longitude = stod(longitude_str);
-    airports[ID] = Airport {name, city, country};
+    
+    // your IDE may show this is an error. It is not, this is a valid assignment
+    airports[ID] = Airport {name, city, country, std::vector<int>()};
   }
 
   airportsFile.close();
@@ -74,24 +77,18 @@ FlightGraph::FlightGraph(std::string airportsFilename, std::string routesFilenam
     std::getline(ss, destAPID_str, ',');
     std::getline(ss, codeshare, ',');
     std::getline(ss, stops_str, ',');
-    std::getline(ss, equip, ',');
+    std::getline(ss, equip, ',');       // equip denotes planes used. could be useful in determining throughput
     if (srcAPID_str != "\\N" && destAPID_str != "\\N") {
       int srcAPID, destAPID;//, airlineID, stops;
       srcAPID = stoi(srcAPID_str);
       destAPID = stoi(destAPID_str);
+      // not necessary atm, but might be useful in the future
       //airlineID = stoi(airlineID_str);
       //stops = stoi(stops_str);
 
       //std::cout << airports[srcAPID].name << " -> " << airports[destAPID].name << std::endl;
 
-      routes[srcAPID].push_back(destAPID);
+      airports[srcAPID].routes.push_back(destAPID);
     }
-
-    
   }
-
 }
-
-//FlightGraph::FlightGraph(std::string airportsFilename) {
-
-//}
