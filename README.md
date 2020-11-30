@@ -7,7 +7,7 @@
 
 ### General Use
  * Convert OpenFlight data into internal representation. Probably directly to graph.
-   * Matrix? Vectors of pointers?
+   * This is now more or less done. Might need slight tweaks.
 
 ### Dijkstra's Algorithm
  * Create graph with distance/time edges.
