@@ -1,0 +1,21 @@
+Development Log
+
+Week of 11/15/2020-11/21/2020
+
+	The final project group collectively chose to meet on discord to discuss
+	the project goals and write a team contract. Every member agreed to the
+	team contract and uploaded their respective version to the github
+	repository. For our project goals we decided to use the openflight data
+	set. We also planned to implment the pagerank algorithm and Dijkstra's
+	algorithm. We will be using a BFS to traverse our respective graph. The
+	only development done this week was organizing the readme to show what 
+	functions the group still needs to implement.
+
+
+Week of 11/22/2020-11/29/2020
+	
+	We collectively as group decided that there will be no mandatory work to
+	be done over the break. However, people were still free to work on the 
+	project if they wanted to. During the break our group managed to develop
+	a program that is able to parse the OpenFlight dataset. We are now able
+	to read in the OpenFlights dataset and add airports to our graph.
