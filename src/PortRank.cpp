@@ -2,7 +2,6 @@
 #include <iostream>
 
 int main(int argc, char * argv[]) {
-  // TODO: use argument, check for correct syntax
   std::string airports = "data/airports.dat";
   std::string routes = "data/routes.dat";
 
@@ -21,7 +20,8 @@ int main(int argc, char * argv[]) {
 
   std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
   
-  FlightGraph fg(airports, routes);
+  FlightGraph fg(airports);
+  fg.addRoutes(routes);
   
   // outputs a full list of routes to stdout in form:
   // Example Airport has routes to:
@@ -29,7 +29,7 @@ int main(int argc, char * argv[]) {
   // just for debug, should be deleted or commented out at some point
   for (const auto & [ID, airport] : fg.airports) {
     std::cout << airport.name << " has routes to:" << std::endl;
-    for (const auto dest : airport.routes) {
+    for (const auto & [weight, dest] : airport.routes) {
       std::cout << fg.airports[dest].name << ", ";
     }
     std::cout << std::endl << std::endl;

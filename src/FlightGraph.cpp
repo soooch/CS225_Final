@@ -1,7 +1,7 @@
 #include "FlightGraph.h"
 #include <iostream>
 
-FlightGraph::FlightGraph(std::string airportsFilename, std::string routesFilename) {
+FlightGraph::FlightGraph(std::string airportsFilename) {
   std::ifstream airportsFile(airportsFilename);
   if (!airportsFile.is_open()) {
     std::cerr << "error: file open failed " << airportsFilename << std::endl;
@@ -54,16 +54,19 @@ FlightGraph::FlightGraph(std::string airportsFilename, std::string routesFilenam
     longitude = stod(longitude_str);
     
     // your IDE may show this is an error. It is not, this is a valid assignment
-    airports[ID] = Airport {name, city, country, std::vector<int>(), latitude, longitude};
+    airports[ID] = Airport {name, city, country, latitude, longitude, std::vector<std::pair<double, int>>()};
   }
 
   airportsFile.close();
+}
 
+bool FlightGraph::addRoutes(std::string routesFilename, const std::function <double(const Airport&, const Airport&, int, const std::string&)> weightFunc) {
   std::ifstream routesFile(routesFilename);
   if (!routesFile.is_open()) {
     std::cerr << "error: file open failed " << routesFilename << std::endl;
-    exit(1);
+    return false;
   }
+  std::string line;
   while (std::getline(routesFile, line)) {
     std::stringstream ss(line);
     std::string airline, airlineID_str, srcAP, srcAPID_str, 
@@ -88,8 +91,10 @@ FlightGraph::FlightGraph(std::string airportsFilename, std::string routesFilenam
 
       // if not already added airports, don't add to graph
       if (airports.count(srcAPID) != 0 && airports.count(destAPID) != 0) {
-        airports[srcAPID].routes.push_back(destAPID);
+        double weight = weightFunc(airports[srcAPID], airports[destAPID], 3, "747");
+        airports[srcAPID].routes.push_back(std::pair<double, int>(weight, destAPID));
       }
     }
   }
+  return true;
 }
