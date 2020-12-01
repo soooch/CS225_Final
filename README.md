@@ -5,17 +5,11 @@
 
 ## Potential functions to implement
 
-### General Use
- * Convert OpenFlight data into internal representation. Probably directly to graph.
-   * This is now more or less done. Might need slight tweaks.
-
 ### Dijkstra's Algorithm
- * Create graph with distance/time edges.
-   * Calculate distance/time based on provided location data
+ * Maybe figure out time weighting. Have distance weighting working.
  * Actually run Dijkstra's
    * Potentially choose to prioritize time or distance
 
 ### PageRank Algorithm
- * Create graph with "bandwidth" edges (number of routes in between).
  * Actually run PageRank
    * Learn how to actually run Pagerank
