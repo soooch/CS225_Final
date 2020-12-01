@@ -3,7 +3,7 @@
 #include <math.h>
 using namespace std;
 
-double distance_weight(const FlightGraph::Airport & c1, const FlightGraph::Airport & c2, int stops, const std::string & equip) {
+inline double distance_weight(const FlightGraph::Airport & c1, const FlightGraph::Airport & c2, int stops, const std::string & equip) {
     double lat1 = c1.latitude * M_PI/180; //Convert from degrees to radians for Trig functions
     double lat2 = c2.latitude * M_PI/180; 
     double deltaLat = (c2.latitude-c1.latitude) * M_PI/180; 

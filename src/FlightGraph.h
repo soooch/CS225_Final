@@ -4,7 +4,6 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <functional>
 
 class FlightGraph {
   public:
@@ -14,9 +13,15 @@ class FlightGraph {
     std::vector<std::pair<double, int>> routes;
   };
 
-  FlightGraph(std::string airportsFilename);
+  FlightGraph(const std::string & airportsFilename);
   
-  bool addRoutes(std::string routesFilename, const std::function <double(const Airport&, const Airport&, int, const std::string&)> = [](Airport a, Airport b, int stops, std::string equip){return 1.0;});
+  bool addRoutes(const std::string & routesFilename, 
+    double (*weightFunc)(const Airport&, const Airport&, int, const std::string&));
+  
+  bool addRoutes(const std::string & routesFilename) {
+    return addRoutes(routesFilename, 
+      [](const FlightGraph::Airport & a1, const FlightGraph::Airport & a2, int stops, const std::string & equip){return 1.0;});
+  }
   
   std::unordered_map<int, Airport> airports;
 };

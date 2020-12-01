@@ -1,7 +1,7 @@
 #include "FlightGraph.h"
 #include <iostream>
 
-FlightGraph::FlightGraph(std::string airportsFilename) {
+FlightGraph::FlightGraph(const std::string & airportsFilename) {
   std::ifstream airportsFile(airportsFilename);
   if (!airportsFile.is_open()) {
     std::cerr << "error: file open failed " << airportsFilename << std::endl;
@@ -60,7 +60,8 @@ FlightGraph::FlightGraph(std::string airportsFilename) {
   airportsFile.close();
 }
 
-bool FlightGraph::addRoutes(std::string routesFilename, const std::function <double(const Airport&, const Airport&, int, const std::string&)> weightFunc) {
+bool FlightGraph::addRoutes(const std::string & routesFilename, 
+  double (*weightFunc)(const Airport&, const Airport&, int, const std::string&)) {
   std::ifstream routesFile(routesFilename);
   if (!routesFile.is_open()) {
     std::cerr << "error: file open failed " << routesFilename << std::endl;

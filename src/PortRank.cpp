@@ -27,6 +27,7 @@ int main(int argc, char * argv[]) {
   // Example Airport has routes to:
   // Airport of Example, Another Airport, Example Airport North, 
   // just for debug, should be deleted or commented out at some point
+  /*
   for (const auto & [ID, airport] : fg.airports) {
     std::cout << airport.name << " has routes to:" << std::endl;
     for (const auto & [weight, dest] : airport.routes) {
@@ -34,6 +35,7 @@ int main(int argc, char * argv[]) {
     }
     std::cout << std::endl << std::endl;
   }
+  */
 
   return 0;
 }
