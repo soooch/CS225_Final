@@ -20,7 +20,8 @@ class FlightGraph {
   
   bool addRoutes(const std::string & routesFilename) {
     return addRoutes(routesFilename, 
-      [](const FlightGraph::Airport & a1, const FlightGraph::Airport & a2, int stops, const std::string & equip){return 1.0;});
+      // default weight function just returns 0
+      [](const FlightGraph::Airport & a1, const FlightGraph::Airport & a2, int stops, const std::string & equip){return 0.0;});
   }
   
   std::unordered_map<int, Airport> airports;

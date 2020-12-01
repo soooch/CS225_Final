@@ -12,7 +12,7 @@ SRCS_O  	:= $(addsuffix .o, $(SRCS))
 all : $(TARGETS)
 
 clean:
-		@echo "🧹 Clearing bin"
+		@echo "🧹 Emptying bin"
 		-rm $(BIN_DIR)/*
 
 run:

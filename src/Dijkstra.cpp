@@ -36,11 +36,10 @@ int main(int argc, char * argv[]) {
   FlightGraph fg(airports);
   fg.addRoutes(routes, distance_weight);
 
-  int AP_check = 1613;
-
-  std::cout << fg.airports[AP_check].name << std::endl;
-  for (const auto & [weight, APID] : fg.airports[AP_check].routes) {
-    std::cout << fg.airports[APID].name << " is " << weight << " km away" << std::endl;
+  int APID = 1613;
+  std::cout << fg.airports[APID].name << std::endl;
+  for (const auto & [weight, dest] : fg.airports[APID].routes) {
+    std::cout << fg.airports[dest].name << " is " << weight << " km away" << std::endl;
   }
 
   return 0;
