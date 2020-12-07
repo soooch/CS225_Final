@@ -5,12 +5,9 @@
 #include <fstream>
 #include <sstream>
 
+template <class Route>
 class FlightGraph {
   public:
-  struct Route {
-    double weight;
-    int dest;
-  };
   struct Airport {
     std::string name, city, country;
     double latitude, longitude;
