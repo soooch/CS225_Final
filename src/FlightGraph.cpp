@@ -54,7 +54,7 @@ FlightGraph::FlightGraph(const std::string & airportsFilename) {
     longitude = stod(longitude_str);
     
     // your IDE may show this is an error. It is not, this is a valid assignment
-    airports[ID] = Airport {name, city, country, latitude, longitude, std::vector<std::pair<double, int>>()};
+    airports[ID] = Airport {name, city, country, latitude, longitude, std::vector<Route>()};
   }
 
   airportsFile.close();
@@ -93,7 +93,7 @@ bool FlightGraph::addRoutes(const std::string & routesFilename,
       // if not already added airports, don't add to graph
       if (airports.count(srcAPID) != 0 && airports.count(destAPID) != 0) {
         double weight = weightFunc(airports[srcAPID], airports[destAPID], 3, "747");
-        airports[srcAPID].routes.push_back(std::pair<double, int>(weight, destAPID));
+        airports[srcAPID].routes.emplace_back(Route {weight, destAPID});
       }
     }
   }

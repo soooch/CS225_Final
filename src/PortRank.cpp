@@ -30,8 +30,8 @@ int main(int argc, char * argv[]) {
   /*
   for (const auto & [ID, airport] : fg.airports) {
     std::cout << airport.name << " has routes to:" << std::endl;
-    for (const auto & [weight, dest] : airport.routes) {
-      std::cout << fg.airports[dest].name << ", ";
+    for (const auto & route : airport.routes) {
+      std::cout << fg.airports[route.dest].name << ", ";
     }
     std::cout << std::endl << std::endl;
   }

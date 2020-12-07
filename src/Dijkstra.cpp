@@ -34,12 +34,19 @@ int main(int argc, char * argv[]) {
   std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
   
   FlightGraph fg(airports);
+
+  struct NodeInfo {
+    bool visited;
+    double dist;
+  };
   fg.addRoutes(routes, distance_weight);
+  
+
 
   int APID = 1613;
   std::cout << fg.airports[APID].name << std::endl;
-  for (const auto & [weight, dest] : fg.airports[APID].routes) {
-    std::cout << fg.airports[dest].name << " is " << weight << " km away" << std::endl;
+  for (const auto & route : fg.airports[APID].routes) {
+    std::cout << fg.airports[route.dest].name << " is " << route.weight << " km away" << std::endl;
   }
 
   return 0;

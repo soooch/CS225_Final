@@ -7,10 +7,14 @@
 
 class FlightGraph {
   public:
+  struct Route {
+    double weight;
+    int dest;
+  };
   struct Airport {
     std::string name, city, country;
     double latitude, longitude;
-    std::vector<std::pair<double, int>> routes;
+    std::vector<Route> routes;
   };
 
   FlightGraph(const std::string & airportsFilename);
