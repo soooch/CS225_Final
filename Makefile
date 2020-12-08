@@ -1,19 +1,17 @@
 CXX       := g++
 CXX_FLAGS := -Wall -Wextra -g -std=c++17
-LD_FLAGS  := 
 
 BIN_DIR  	:= bin
 SRC_DIR  	:= src
 
 TARGETS 	:= PortRank Dijkstra
-SRCS    	:= FlightGraph
-SRCS_O  	:= $(addsuffix .o, $(SRCS))
 
 all : $(TARGETS)
 
 clean:
 		@echo "🧹 Emptying bin"
-		-rm $(BIN_DIR)/*
+		-rm -rf $(BIN_DIR)/*
+		touch $(BIN_DIR)/binaries_here
 
 run:
 		@echo "🚀 Running..."
@@ -21,10 +19,6 @@ run:
 		
 $(TARGETS) : $(SRCS_O)
 		@echo "🏗 Building $@"
-		$(CXX) $(CXX_FLAGS) -c -o $(BIN_DIR)/$@.o $(SRC_DIR)/$@.cpp
-		$(CXX) $(CXX_FLAGS) $(LD_FLAGS) -o $(BIN_DIR)/$@ $(BIN_DIR)/$(addsuffix .o, $@) $(addprefix $(BIN_DIR)/, $(SRCS_O))
+		$(CXX) $(CXX_FLAGS) -o $(BIN_DIR)/$@ $(SRC_DIR)/$@.cpp
 
-$(SRCS_O):
-		$(CXX) $(CXX_FLAGS) -c -o $(BIN_DIR)/$@ $(SRC_DIR)/$(patsubst %.o,%.cpp, $@)
-		
 .PHONY: clean run
