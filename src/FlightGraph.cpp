@@ -1,7 +1,7 @@
 #include "FlightGraph.h"
-#include <iostream>
 
-FlightGraph::FlightGraph(const std::string & airportsFilename) {
+template <class Route>
+FlightGraph<Route>::FlightGraph(const std::string & airportsFilename) {
   std::ifstream airportsFile(airportsFilename);
   if (!airportsFile.is_open()) {
     std::cerr << "error: file open failed " << airportsFilename << std::endl;
@@ -60,8 +60,8 @@ FlightGraph::FlightGraph(const std::string & airportsFilename) {
   airportsFile.close();
 }
 
-bool FlightGraph::addRoutes(const std::string & routesFilename, 
-  double (*weightFunc)(const Airport&, const Airport&, int, const std::string&)) {
+template <class Route>
+bool FlightGraph<Route>::addRoutes(const std::string & routesFilename) {
   std::ifstream routesFile(routesFilename);
   if (!routesFile.is_open()) {
     std::cerr << "error: file open failed " << routesFilename << std::endl;
@@ -83,17 +83,15 @@ bool FlightGraph::addRoutes(const std::string & routesFilename,
     std::getline(ss, stops_str, ',');
     std::getline(ss, equip, ',');       // equip denotes planes used. could be useful in determining throughput
     if (srcAPID_str != "\\N" && destAPID_str != "\\N") {
-      int srcAPID, destAPID;//, airlineID, stops;
-      srcAPID = stoi(srcAPID_str);
-      destAPID = stoi(destAPID_str);
+      int srcAPID = stoi(srcAPID_str);
+      int destAPID = stoi(destAPID_str);
       // not necessary atm, but might be useful in the future
-      //airlineID = stoi(airlineID_str);
-      //stops = stoi(stops_str);
+      //int airlineID = stoi(airlineID_str);
+      //int stops = stoi(stops_str);
 
       // if not already added airports, don't add to graph
       if (airports.count(srcAPID) != 0 && airports.count(destAPID) != 0) {
-        double weight = weightFunc(airports[srcAPID], airports[destAPID], 3, "747");
-        airports[srcAPID].routes.emplace_back(Route {weight, destAPID});
+        airports[srcAPID].routes.push_back(Route(airports[srcAPID], airports[destAPID], destAPID, 1, "747"));
       }
     }
   }

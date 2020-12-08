@@ -1,10 +1,10 @@
 #include "FlightGraph.h"
-#include <iostream>
 #include <math.h>
 using namespace std;
 
-inline double distance_weight(const FlightGraph::Airport & c1, const FlightGraph::Airport & c2, int stops, const std::string & equip) {
-    double lat1 = c1.latitude * M_PI/180; //Convert from degrees to radians for Trig functions
+template <class Route>
+double distance_weight(const typename FlightGraph<Route>::Airport & c1, const typename FlightGraph<Route>::Airport & c2, const int stops, const std::string & equip) {
+    double lat1 = c1.latitude * M_PI/180; //Convert from degrees toradians for Trig functions
     double lat2 = c2.latitude * M_PI/180; 
     double deltaLat = (c2.latitude-c1.latitude) * M_PI/180; 
     double deltaLong = (c2.longitude-c1.longitude) * M_PI/180;
@@ -32,20 +32,26 @@ int main(int argc, char * argv[]) {
   }
 
   std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
-  
-  FlightGraph fg(airports);
 
-  struct NodeInfo {
+  class Route
+  {
+    public:
+    double weight;
+    int dest;
     bool visited;
     double dist;
+    Route(const FlightGraph<Route>::Airport & origin, const FlightGraph<Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID), visited(false), dist(std::numeric_limits<double>::infinity()) {
+      weight = distance_weight<Route>(origin, dest, stops, equip);
+    }
   };
-  fg.addRoutes(routes, distance_weight);
-  
 
+  FlightGraph<Route> fg(airports);
+  fg.addRoutes(routes);
+  
 
   int APID = 1613;
   std::cout << fg.airports[APID].name << std::endl;
-  for (const auto & route : fg.airports[APID].routes) {
+  for (const Route & route : fg.airports[APID].routes) {
     std::cout << fg.airports[route.dest].name << " is " << route.weight << " km away" << std::endl;
   }
 
