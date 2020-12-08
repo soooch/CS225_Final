@@ -6,12 +6,13 @@
 #include <sstream>
 #include <iostream>
 
-template <class Route>
+template <class NodeData, class Route>
 class FlightGraph {
   public:
   struct Airport {
     std::string name, city, country;
     double latitude, longitude;
+    NodeData data;
     std::vector<Route> routes;
   };
 
@@ -58,17 +59,15 @@ class FlightGraph {
       std::getline(ss, source, '"');
       ss.ignore(256, ',');
       
-      int ID;//, altitude, timezone;
-      double latitude, longitude;
 
-      ID = stoi(ID_str);
+      int ID = stoi(ID_str);
       // Don't need right now, but might be helpful later
-      //altitude = stoi(altitude_str);
-      latitude = stod(latitude_str);
-      longitude = stod(longitude_str);
+      //int altitude = stoi(altitude_str);
+      double latitude = stod(latitude_str);
+      double longitude = stod(longitude_str);
       
       // your IDE may show this is an error. It is not, this is a valid assignment
-      airports[ID] = Airport {name, city, country, latitude, longitude, std::vector<Route>()};
+      airports[ID] = Airport {name, city, country, latitude, longitude, NodeData(), std::vector<Route>()};
     }
 
     airportsFile.close();

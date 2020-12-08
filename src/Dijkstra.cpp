@@ -1,9 +1,9 @@
 #include "FlightGraph.h"
 #include <math.h>
-using namespace std;
+#include <queue>
 
-template <class Route>
-double distance_weight(const typename FlightGraph<Route>::Airport & c1, const typename FlightGraph<Route>::Airport & c2, const int stops, const std::string & equip) {
+template <class NodeData, class Route>
+double distance_weight(const typename FlightGraph<NodeData, Route>::Airport & c1, const typename FlightGraph<NodeData, Route>::Airport & c2, const int stops, const std::string & equip) {
     double lat1 = c1.latitude * M_PI/180; //Convert from degrees toradians for Trig functions
     double lat2 = c2.latitude * M_PI/180; 
     double deltaLat = (c2.latitude-c1.latitude) * M_PI/180; 
@@ -17,6 +17,7 @@ double distance_weight(const typename FlightGraph<Route>::Airport & c1, const ty
 int main(int argc, char * argv[]) {
   std::string airports = "data/airports.dat";
   std::string routes = "data/routes.dat";
+
 
   for (int i = 1; i < argc; i++) {
     if (std::string("-a").compare(argv[i]) == 0) {
@@ -33,25 +34,37 @@ int main(int argc, char * argv[]) {
 
   std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
 
+  class NodeData {
+    public:
+    bool visited;
+    double dist;
+    NodeData() : visited(false), dist(std::numeric_limits<double>::infinity()) {}
+  };
+
   class Route
   {
     public:
     double weight;
     int dest;
-    bool visited;
-    double dist;
-    Route(const FlightGraph<Route>::Airport & origin, const FlightGraph<Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID), visited(false), dist(std::numeric_limits<double>::infinity()) {
-      weight = distance_weight<Route>(origin, dest, stops, equip);
+    Route(const FlightGraph<NodeData, Route>::Airport & origin, const FlightGraph<NodeData, Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID) {
+      weight = distance_weight<NodeData, Route>(origin, dest, stops, equip);
     }
   };
 
-  FlightGraph<Route> fg(airports);
+  FlightGraph<NodeData, Route> fg(airports);
   fg.addRoutes(routes);
   
 
-  int APID = 1613;
-  std::cout << fg.airports[APID].name << std::endl;
-  for (const Route & route : fg.airports[APID].routes) {
+  int originID = 1613; // Vienna International Airport
+  int destID = 205; // Faro Airport
+
+  std::queue<FlightGraph<NodeData, Route>::Airport&> priorityQueue;
+
+  fg.airports[originID].data.dist = 0.0;
+  priorityQueue.push(fg.airports[originID]);
+
+  std::cout << fg.airports[originID].name << std::endl;
+  for (const Route & route : fg.airports[originID].routes) {
     std::cout << fg.airports[route.dest].name << " is " << route.weight << " km away" << std::endl;
   }
 
