@@ -19,15 +19,14 @@ int main(int argc, char * argv[]) {
   }
 
   std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
-  class NodeData {};
   class Route {
     public:
     int dest;
     
-    Route(const FlightGraph<NodeData, Route>::Airport & origin, const FlightGraph<NodeData, Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID) {}
+    Route(const FlightGraph<Route>::Airport & origin, const FlightGraph<Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID) {}
   };
 
-  FlightGraph<NodeData, Route> fg(airports);
+  FlightGraph<Route> fg(airports);
   fg.addRoutes(routes);
   
   // outputs a full list of routes to stdout in form:

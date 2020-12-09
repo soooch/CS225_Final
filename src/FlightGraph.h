@@ -6,13 +6,12 @@
 #include <sstream>
 #include <iostream>
 
-template <class NodeData, class Route>
+template <class Route>
 class FlightGraph {
   public:
   struct Airport {
     std::string name, city, country;
     double latitude, longitude;
-    NodeData data;
     std::vector<Route> routes;
   };
 
@@ -67,7 +66,7 @@ class FlightGraph {
       double longitude = stod(longitude_str);
       
       // your IDE may show this is an error. It is not, this is a valid assignment
-      airports[ID] = Airport {name, city, country, latitude, longitude, NodeData(), std::vector<Route>()};
+      airports[ID] = Airport {name, city, country, latitude, longitude, std::vector<Route>()};
     }
 
     airportsFile.close();
@@ -102,7 +101,7 @@ class FlightGraph {
 
         // if not already added airports, don't add to graph
         if (airports.count(srcAPID) != 0 && airports.count(destAPID) != 0) {
-          airports[srcAPID].routes.push_back(Route(airports[srcAPID], airports[destAPID], destAPID, 1, "747"));
+          airports[srcAPID].routes.emplace_back(Route(airports[srcAPID], airports[destAPID], destAPID, 1, "747"));
         }
       }
     }

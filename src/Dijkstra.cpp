@@ -2,8 +2,8 @@
 #include <math.h>
 #include <queue>
 
-template <class NodeData, class Route>
-double distance_weight(const typename FlightGraph<NodeData, Route>::Airport & c1, const typename FlightGraph<NodeData, Route>::Airport & c2, const int stops, const std::string & equip) {
+template <class Route>
+double distance_weight(const typename FlightGraph<Route>::Airport & c1, const typename FlightGraph<Route>::Airport & c2, const int stops, const std::string & equip) {
     double lat1 = c1.latitude * M_PI/180; //Convert from degrees toradians for Trig functions
     double lat2 = c2.latitude * M_PI/180; 
     double deltaLat = (c2.latitude-c1.latitude) * M_PI/180; 
@@ -46,22 +46,28 @@ int main(int argc, char * argv[]) {
     public:
     double weight;
     int dest;
-    Route(const FlightGraph<NodeData, Route>::Airport & origin, const FlightGraph<NodeData, Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID) {
-      weight = distance_weight<NodeData, Route>(origin, dest, stops, equip);
+    Route(const FlightGraph<Route>::Airport & origin, const FlightGraph<Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID) {
+      weight = distance_weight<Route>(origin, dest, stops, equip);
     }
   };
 
-  FlightGraph<NodeData, Route> fg(airports);
+  FlightGraph<Route> fg(airports);
   fg.addRoutes(routes);
+
+  std::unordered_map<int, NodeData> nodes(fg.airports.size());
   
+  for (const auto & [ID, Airport] : fg.airports) {
+    nodes[ID] = NodeData();
+  }
 
   int originID = 1613; // Vienna International Airport
   int destID = 205; // Faro Airport
 
-  std::queue<FlightGraph<NodeData, Route>::Airport&> priorityQueue;
+  std::queue<std::pair<int, NodeData&>> priorityQueue;
 
-  fg.airports[originID].data.dist = 0.0;
-  priorityQueue.push(fg.airports[originID]);
+  nodes[originID].dist = 0.0;
+  priorityQueue.push(std::pair<int, NodeData&>(originID, nodes[originID]));
+  
 
   std::cout << fg.airports[originID].name << std::endl;
   for (const Route & route : fg.airports[originID].routes) {
