@@ -19,3 +19,19 @@ Week of 11/22/2020-11/29/2020
 	project if they wanted to. During the break our group managed to develop
 	a program that is able to parse the OpenFlight dataset. We are now able
 	to read in the OpenFlights dataset and add airports to our graph.
+	
+Week of 11/30/2020-12/06/2020
+
+	We finally made our MAKE files for our project. That way we can run and
+	build the programs. We also tidied up our flightgraph class to make it
+	easier to read and use. We began writing our BFS traversal as well as
+	our two algorithms. For Dijkstra's algorithm we had to come up with a 
+	way to make our own weights. We decides to use the coordinates of each
+	airport which is given with the openflights dataset. Using these 
+	coordinates we were able to calculate distance. We decided to use
+	the Haversine formula to account for the curvature of the earth.
+	We also started working on a queue based traversal. 
+
+Week of 12/07/2020-12/11/2020
+
+	To be filled out.
