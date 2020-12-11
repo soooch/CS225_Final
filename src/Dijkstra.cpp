@@ -17,6 +17,8 @@ double distance_weight(const typename FlightGraph<Route>::Airport & c1, const ty
 int main(int argc, char * argv[]) {
   std::string airports = "data/airports.dat";
   std::string routes = "data/routes.dat";
+  int originID = 1613; // Vienna International Airport
+  int destID = 3608; // Richmond International Airport
 
 
   for (int i = 1; i < argc; i++) {
@@ -30,16 +32,19 @@ int main(int argc, char * argv[]) {
         routes = argv[i];
       }
     }
+    else if (std::string("-s").compare(argv[i]) == 0) {
+      if (++i < argc) {
+        originID = std::stoi(argv[i]);
+      }
+    }
+    else if (std::string("-e").compare(argv[i]) == 0) {
+      if (++i < argc) {
+        destID = std::stoi(argv[i]);
+      }
+    }
   }
 
   std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
-
-  class NodeData {
-    public:
-    bool visited;
-    double dist;
-    NodeData() : visited(false), dist(std::numeric_limits<double>::infinity()) {}
-  };
 
   class Route
   {
@@ -53,26 +58,66 @@ int main(int argc, char * argv[]) {
 
   FlightGraph<Route> fg(airports);
   fg.addRoutes(routes);
-
-  std::unordered_map<int, NodeData> nodes(fg.airports.size());
   
+  std::cout << "Finding shortest path from " << fg.airports[originID].name << " to " << fg.airports[destID].name << std::endl;
+  
+  struct NodeData {
+    bool visited;
+    double dist;
+    int prev;
+    NodeData() : visited(false), dist(std::numeric_limits<double>::infinity()), prev(-1) {}
+    bool operator<(const NodeData & rhs) const {
+      return this->dist < rhs.dist;
+    }
+  };
+  
+  std::unordered_map<int, NodeData> nodes(fg.airports.size());
   for (const auto & [ID, Airport] : fg.airports) {
     nodes[ID] = NodeData();
   }
 
-  int originID = 1613; // Vienna International Airport
-  int destID = 205; // Faro Airport
-
-  std::queue<std::pair<int, NodeData&>> priorityQueue;
+  auto cmp = [nodes](int lhs, int rhs){return nodes.at(rhs) < nodes.at(lhs);};
+  // TODO: may need to put ID inside NodeData if pairs are slow
+  //std::priority_queue<std::pair<int, NodeData&>, std::vector<std::pair<int, NodeData&>>, decltype(cmp)> pq(cmp);
+  std::priority_queue<int, std::vector<int>, decltype(cmp)> pq(cmp);
 
   nodes[originID].dist = 0.0;
-  priorityQueue.push(std::pair<int, NodeData&>(originID, nodes[originID]));
-  
+  pq.push(originID);
 
-  std::cout << fg.airports[originID].name << std::endl;
-  for (const Route & route : fg.airports[originID].routes) {
-    std::cout << fg.airports[route.dest].name << " is " << route.weight << " km away" << std::endl;
+  while (!pq.empty()) {
+    // TODO: maybe std::move first out of pq if copies take too long
+    int const ID = pq.top();
+    NodeData & node = nodes[ID];
+    pq.pop();
+
+    if (ID == destID) break;
+    if (node.visited) continue;
+
+    for (const Route & route : fg.airports[ID].routes) {
+      if (nodes[route.dest].visited) continue;
+      double altDist = node.dist + route.weight;
+      if (altDist < nodes[route.dest].dist) {
+        nodes[route.dest].dist = altDist;
+        nodes[route.dest].prev = ID;
+        pq.push(route.dest);
+      }
+    }
+    node.visited = true;
   }
+
+  if (nodes[destID].prev == -1) {
+    std::cout << "No route found." << std::endl;
+    return 0;
+  }
+  std::vector<int> path;
+  for (int ID = destID; ID != -1; ID = nodes[ID].prev) {
+    path.push_back(ID);
+  }
+
+  for (auto ID = path.rbegin(); ID != path.rend(); ++ID) {
+    std::cout << fg.airports[*ID].name << " -> ";
+  }
+  std::cout << "\b\b\b\b    " << std::endl;
 
   return 0;
 }
