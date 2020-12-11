@@ -17,8 +17,8 @@ double distance_weight(const typename FlightGraph<Route>::Airport & c1, const ty
 int main(int argc, char * argv[]) {
   std::string airports = "data/airports.dat";
   std::string routes = "data/routes.dat";
-  int originID = 1613; // Vienna International Airport
-  int destID = 3608; // Richmond International Airport
+  int originID = 3830; // Chicago O'Hare International Airport
+  int destID = 3990; // Emerald Airport
 
 
   for (int i = 1; i < argc; i++) {
@@ -77,16 +77,13 @@ int main(int argc, char * argv[]) {
   }
 
   auto cmp = [nodes](int lhs, int rhs){return nodes.at(rhs) < nodes.at(lhs);};
-  // TODO: may need to put ID inside NodeData if pairs are slow
-  //std::priority_queue<std::pair<int, NodeData&>, std::vector<std::pair<int, NodeData&>>, decltype(cmp)> pq(cmp);
   std::priority_queue<int, std::vector<int>, decltype(cmp)> pq(cmp);
 
   nodes[originID].dist = 0.0;
   pq.push(originID);
 
   while (!pq.empty()) {
-    // TODO: maybe std::move first out of pq if copies take too long
-    int const ID = pq.top();
+    const int ID = pq.top();
     NodeData & node = nodes[ID];
     pq.pop();
 
@@ -95,7 +92,7 @@ int main(int argc, char * argv[]) {
 
     for (const Route & route : fg.airports[ID].routes) {
       if (nodes[route.dest].visited) continue;
-      double altDist = node.dist + route.weight;
+      const double altDist = node.dist + route.weight;
       if (altDist < nodes[route.dest].dist) {
         nodes[route.dest].dist = altDist;
         nodes[route.dest].prev = ID;

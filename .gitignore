@@ -3,3 +3,6 @@
 
 *.gch
 *.o
+
+/bin/*
+!/bin/binaries_here

@@ -3,12 +3,13 @@
 [Goals](docs/GOALS.pdf)  
 [Contract](docs/CONTRACT_skavi2.pdf)
 
-## Potential functions to implement
+## Work to be done
 
 ### Dijkstra's Algorithm
- * Maybe figure out time weighting. Have distance weighting working.
- * Actually run Dijkstra's
-   * Potentially choose to prioritize time or distance
+ * Fully working.
+ * Potentially make different weighting functions.
+ * Make it faster.
+ * Maybe graphical output (not happening lol)
 
 ### PageRank Algorithm
  * Actually run PageRank
