@@ -2,6 +2,7 @@
 #include <math.h>
 #include <queue>
 
+// Has more arguments than necessary to conform to possible future implementaion of weight function
 template <class Route>
 double distance_weight(const typename FlightGraph<Route>::Airport & c1, const typename FlightGraph<Route>::Airport & c2, const int stops, const std::string & equip) {
     double lat1 = c1.latitude * M_PI/180; //Convert from degrees toradians for Trig functions
@@ -15,52 +16,71 @@ double distance_weight(const typename FlightGraph<Route>::Airport & c1, const ty
 }
 
 int main(int argc, char * argv[]) {
-  std::string airports = "data/airports.dat";
-  std::string routes = "data/routes.dat";
+  std::string airportsFN = "data/airports.dat";
+  std::string routesFN = "data/routes.dat";
   int originID = 3830; // Chicago O'Hare International Airport
   int destID = 3990; // Emerald Airport
 
-
+  // Parses arguments to program
+  // -a : airport file
+  // -r : route file
+  // -o : origin airport (OpenFlights ID)
+  // -d : destination airport (OpenFlights ID)
   for (int i = 1; i < argc; i++) {
     if (std::string("-a").compare(argv[i]) == 0) {
       if (++i < argc) {
-        airports = argv[i];
+        airportsFN = argv[i];
       }
     }
     else if (std::string("-r").compare(argv[i]) == 0) {
       if (++i < argc) {
-        routes = argv[i];
+        routesFN = argv[i];
       }
     }
-    else if (std::string("-s").compare(argv[i]) == 0) {
+    else if (std::string("-o").compare(argv[i]) == 0) {
       if (++i < argc) {
         originID = std::stoi(argv[i]);
       }
     }
-    else if (std::string("-e").compare(argv[i]) == 0) {
+    else if (std::string("-d").compare(argv[i]) == 0) {
       if (++i < argc) {
         destID = std::stoi(argv[i]);
       }
     }
   }
 
-  std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
+  std::cout << "Using " << airportsFN << " for airports file and " << routesFN << " for routes file." << std::endl;
 
-  class Route
+  // struct type to feed into FlightGraph. Templating FlightGraph allows it to be more efficient for other algorithms.
+  struct Route
   {
-    public:
     double weight;
     int dest;
+    // Route initializer to be used from FlightGraph.
+    // passes most parameters to weight function to generate edge weight.
     Route(const FlightGraph<Route>::Airport & origin, const FlightGraph<Route>::Airport & dest, int destID, int stops, const std::string & equip) : dest(destID) {
       weight = distance_weight<Route>(origin, dest, stops, equip);
     }
   };
 
-  FlightGraph<Route> fg(airports);
-  fg.addRoutes(routes);
+  // construct the FlightGraph struct with the openflight airport dataset
+  FlightGraph<Route> fg(airportsFN);
+  // provide routes with openflights routes dataset
+  fg.addRoutes(routesFN);
+
+  // make sure inputted airport IDs are valid
+  if (fg.airports.count(originID) == 0) {
+    std::cout << "Origin ID " << originID << " is invalid." << std::endl;
+    return 1;
+  }
+  if (fg.airports.count(destID) == 0) {
+    std::cout << "Destination ID " << destID << " is invalid." << std::endl;
+    return 1;
+  }
   
-  std::cout << "Finding shortest path from " << fg.airports[originID].name << " to " << fg.airports[destID].name << std::endl;
+  std::cout << "Finding shortest path from " << fg.airports[originID].name << " to " << fg.airports[destID].name << "." << std::endl;
   
+  // struct to hold all data required by Dijkstra algorithm
   struct NodeData {
     bool visited;
     double dist;
@@ -71,14 +91,20 @@ int main(int argc, char * argv[]) {
     }
   };
   
+  // map holds a NodeData struct for each airport. Internal hashmap allows fast access
   std::unordered_map<int, NodeData> nodes(fg.airports.size());
+  // with there was a better way to do this
   for (const auto & [ID, Airport] : fg.airports) {
     nodes[ID] = NodeData();
   }
 
-  auto cmp = [nodes](int lhs, int rhs){return nodes.at(rhs) < nodes.at(lhs);};
+  // a comparison function to pass to priority_queue. 
+  // captures nodes map because all actual dist values are stored there.
+  auto cmp = [&nodes](int lhs, int rhs){return nodes[rhs] < nodes[lhs];};
+  // priority_queue that pops out the node with smallest distance
   std::priority_queue<int, std::vector<int>, decltype(cmp)> pq(cmp);
 
+  // start of Dijkstra's algo
   nodes[originID].dist = 0.0;
   pq.push(originID);
 
@@ -91,26 +117,28 @@ int main(int argc, char * argv[]) {
     if (node.visited) continue;
 
     for (const Route & route : fg.airports[ID].routes) {
-      if (nodes[route.dest].visited) continue;
+      NodeData & dest = nodes[route.dest];
+      if (dest.visited) continue;
       const double altDist = node.dist + route.weight;
-      if (altDist < nodes[route.dest].dist) {
-        nodes[route.dest].dist = altDist;
-        nodes[route.dest].prev = ID;
+      if (altDist < dest.dist) {
+        dest.dist = altDist;
+        dest.prev = ID;
         pq.push(route.dest);
       }
     }
     node.visited = true;
   }
 
+  // Finished traversal, check if successfull
   if (nodes[destID].prev == -1) {
     std::cout << "No route found." << std::endl;
-    return 0;
+    return 1;
   }
+  // backtrace to collect path to dest
   std::vector<int> path;
   for (int ID = destID; ID != -1; ID = nodes[ID].prev) {
     path.push_back(ID);
   }
-
   for (auto ID = path.rbegin(); ID != path.rend(); ++ID) {
     std::cout << fg.airports[*ID].name << " -> ";
   }
