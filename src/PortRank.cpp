@@ -28,18 +28,10 @@ int main(int argc, char * argv[]) {
 
   FlightGraph<Route> fg(airports);
   fg.addRoutes(routes);
+
   
-  // outputs a full list of routes to stdout in form:
-  // Example Airport has routes to:
-  // Airport of Example, Another Airport, Example Airport North, 
-  // just for debug, should be deleted or commented out at some point
-  for (const auto & [ID, airport] : fg.airports) {
-    std::cout << airport.name << " has routes to:" << std::endl;
-    for (const auto & route : airport.routes) {
-      std::cout << fg.airports[route.dest].name << ", ";
-    }
-    std::cout << std::endl << std::endl;
-  }
+
+
 
   return 0;
 }

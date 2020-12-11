@@ -16,6 +16,7 @@ double distance_weight(const typename FlightGraph<Route>::Airport & c1, const ty
 }
 
 int main(int argc, char * argv[]) {
+  // default values for unspecified arguments
   std::string airportsFN = "data/airports.dat";
   std::string routesFN = "data/routes.dat";
   std::string originIATA = "\"ORD\""; // Chicago O'Hare International Airport
