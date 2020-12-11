@@ -96,27 +96,23 @@ int main(int argc, char * argv[]) {
     }
   };
   
-  // map holds a NodeData struct for each airport. Internal hashmap allows fast access
-  std::unordered_map<int, NodeData> nodes(fg.airports.size());
-  // with there was a better way to do this
-  for (const auto & [ID, Airport] : fg.airports) {
-    nodes[ID] = NodeData();
-  }
+  // vector holds a NodeData struct for each airport.
+  std::vector<NodeData> nodes(fg.airports.size(), NodeData());
 
   // a comparison function to pass to priority_queue. 
-  // captures nodes map because all actual dist values are stored there.
+  // captures nodes vector because all actual dist values are stored there.
   auto cmp = [&nodes](int lhs, int rhs){return nodes[rhs] < nodes[lhs];};
   // priority_queue that pops out the node with smallest distance
   std::priority_queue<int, std::vector<int>, decltype(cmp)> pq(cmp);
 
-  // start of Dijkstra's algo
+  // Dijkstra's algo
   nodes[originID].dist = 0.0;
   pq.push(originID);
 
   while (!pq.empty()) {
     const int ID = pq.top();
-    NodeData & node = nodes[ID];
     pq.pop();
+    NodeData & node = nodes[ID];
 
     if (ID == destID) break;
     if (node.visited) continue;
@@ -147,7 +143,7 @@ int main(int argc, char * argv[]) {
   for (auto ID = path.rbegin(); ID != path.rend(); ++ID) {
     std::cout << fg.airports[*ID].name << " -> ";
   }
-  std::cout << "\b\b\b\b    " << std::endl;
+  std::cout << "\b\b\b   " << std::endl;
 
   return 0;
 }
