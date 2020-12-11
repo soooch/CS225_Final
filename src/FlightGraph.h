@@ -14,7 +14,10 @@ class FlightGraph {
     double latitude, longitude;
     std::vector<Route> routes;
   };
+  // the only purpose of this class is to populate this map.
+  std::unordered_map<int, Airport> airports;
 
+  // adds all keys (openflights ID) to map and initializes airports structs.
   FlightGraph(const std::string & airportsFilename) {
     std::ifstream airportsFile(airportsFilename);
     if (!airportsFile.is_open()) {
@@ -24,11 +27,14 @@ class FlightGraph {
     std::string line;
     while (std::getline(airportsFile, line))
     {
+      // This is very gross, but the only simple way to parse the file,
       std::stringstream ss(line);
       std::string ID_str, name, city, country, IATA, ICAO, 
                   latitude_str, longitude_str, altitude_str, 
                   timezone_str, DST, tz, type, source;
       
+      // reading until I see a comma and storing in a string. 
+      // For some values, I read until I see a '"' instead, since there might be commas inside.
       std::getline(ss, ID_str, ',');
       ss.ignore(2, '"');
       std::getline(ss, name, '"');
@@ -65,12 +71,13 @@ class FlightGraph {
       double latitude = stod(latitude_str);
       double longitude = stod(longitude_str);
       
-      // your IDE may show this is an error. It is not, this is a valid assignment
+      // add key to map and initialize Airport struct
       airports[ID] = Airport {name, city, country, latitude, longitude, std::vector<Route>()};
     }
-
     airportsFile.close();
   }
+  
+  // reads from openflights routes dataset and populates routes vector in each Airport struct
   bool addRoutes(const std::string & routesFilename) {
     std::ifstream routesFile(routesFilename);
     if (!routesFile.is_open()) {
@@ -83,6 +90,7 @@ class FlightGraph {
       std::string airline, airlineID_str, srcAP, srcAPID_str, 
                   destAP, destAPID_str, codeshare, stops_str, equip;
 
+      // much easier parsing here, since there aren't complex names with internal commas or ""
       std::getline(ss, airline, ',');
       std::getline(ss, airlineID_str, ',');
       std::getline(ss, srcAP, ',');
@@ -92,6 +100,7 @@ class FlightGraph {
       std::getline(ss, codeshare, ',');
       std::getline(ss, stops_str, ',');
       std::getline(ss, equip, ',');       // equip denotes planes used. could be useful in determining throughput
+      // ignore any route from or to an airport without a defined openflights ID
       if (srcAPID_str != "\\N" && destAPID_str != "\\N") {
         int srcAPID = stoi(srcAPID_str);
         int destAPID = stoi(destAPID_str);
@@ -99,7 +108,7 @@ class FlightGraph {
         //int airlineID = stoi(airlineID_str);
         //int stops = stoi(stops_str);
 
-        // if not already added airports, don't add to graph
+        // do not reference any airports that aren't already on the map.
         if (airports.count(srcAPID) != 0 && airports.count(destAPID) != 0) {
           airports[srcAPID].routes.emplace_back(Route(airports[srcAPID], airports[destAPID], destAPID, 1, "747"));
         }
@@ -107,6 +116,4 @@ class FlightGraph {
     }
     return true;
   }
-  
-  std::unordered_map<int, Airport> airports;
 };
