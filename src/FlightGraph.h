@@ -16,6 +16,10 @@ class FlightGraph {
   };
   // the only purpose of this class is to populate this map.
   std::unordered_map<int, Airport> airports;
+  
+  // allows for nicer terminal input. 
+  // Maybe should have just used this as the key to the above map, but ints just felt more efficient.
+  std::unordered_map<std::string, int> IATAMap;
 
   // adds all keys (openflights ID) to map and initializes airports structs.
   FlightGraph(const std::string & airportsFilename) {
@@ -73,6 +77,7 @@ class FlightGraph {
       
       // add key to map and initialize Airport struct
       airports[ID] = Airport {name, city, country, latitude, longitude, std::vector<Route>()};
+      IATAMap[IATA] = ID;
     }
     airportsFile.close();
   }

@@ -18,14 +18,14 @@ double distance_weight(const typename FlightGraph<Route>::Airport & c1, const ty
 int main(int argc, char * argv[]) {
   std::string airportsFN = "data/airports.dat";
   std::string routesFN = "data/routes.dat";
-  int originID = 3830; // Chicago O'Hare International Airport
-  int destID = 3990; // Emerald Airport
+  std::string originIATA = "\"ORD\""; // Chicago O'Hare International Airport
+  std::string destIATA = "\"EMD\""; // Emerald Airport
 
   // Parses arguments to program
   // -a : airport file
   // -r : route file
-  // -o : origin airport (OpenFlights ID)
-  // -d : destination airport (OpenFlights ID)
+  // -o : origin airport (IATA)
+  // -d : destination airport (IATA)
   for (int i = 1; i < argc; i++) {
     if (std::string("-a").compare(argv[i]) == 0) {
       if (++i < argc) {
@@ -39,12 +39,14 @@ int main(int argc, char * argv[]) {
     }
     else if (std::string("-o").compare(argv[i]) == 0) {
       if (++i < argc) {
-        originID = std::stoi(argv[i]);
+        originIATA = argv[i];
+        originIATA = '"' + originIATA + '"';
       }
     }
     else if (std::string("-d").compare(argv[i]) == 0) {
       if (++i < argc) {
-        destID = std::stoi(argv[i]);
+        destIATA = argv[i];
+        destIATA = '"' + destIATA + '"';
       }
     }
   }
@@ -69,14 +71,17 @@ int main(int argc, char * argv[]) {
   fg.addRoutes(routesFN);
 
   // make sure inputted airport IDs are valid
-  if (fg.airports.count(originID) == 0) {
-    std::cout << "Origin ID " << originID << " is invalid." << std::endl;
+  if (fg.IATAMap.count(originIATA) == 0) {
+    std::cout << "Origin IATA code " << originIATA << " is invalid." << std::endl;
     return 1;
   }
-  if (fg.airports.count(destID) == 0) {
-    std::cout << "Destination ID " << destID << " is invalid." << std::endl;
+  if (fg.IATAMap.count(destIATA) == 0) {
+    std::cout << "Destination IATA code " << destIATA << " is invalid." << std::endl;
     return 1;
   }
+  
+  const int originID = fg.IATAMap[originIATA];
+  const int destID = fg.IATAMap[destIATA];
   
   std::cout << "Finding shortest path from " << fg.airports[originID].name << " to " << fg.airports[destID].name << "." << std::endl;
   
