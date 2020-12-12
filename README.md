@@ -48,6 +48,7 @@ To change these arguments use the following flags:
      -a Airport File
      -r Route File
      -i # of iterations
+     -d Damping Factor
      
   Example Syntax: Change from airports.dat to airports_sample.dat
   
