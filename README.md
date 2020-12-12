@@ -4,7 +4,7 @@
 [Contract](docs/CONTRACT_skavi2.pdf)
 
 [Development](docs/Development_Log.txt)
-[Results](docs/CS225_Final_Project_Results.pdf.pdf)
+[Results](https://github-dev.cs.illinois.edu/cs225-fa20/wkolcan2-guoyang2-bwl3-skavi2/blob/master/docs/CS225%20Final%20Project%20Results.pdf)
 
 
 
