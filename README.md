@@ -20,7 +20,7 @@ To change these arguments use the following flags:
     -a Airport File  
     -r Route File  
     -o Origin airport (IATA Code)  
-    -d Destination airport (IATA Code)  
+    -d Destination airport (IATA Code)
  
  Example Syntax: Find shortest path from O'Hare (ORD) to JFK Airport (JFK)
  
@@ -37,11 +37,12 @@ To change these arguments use the following flags:
   1. Make the file in the root directory `make Portrank`
   2. Run the executable `./bin/PortRank`
   
-  The default arguments are "data/airports.dat" for airport data and "data/routes/dat".
+  The default arguments are "data/airports.dat" for airport data and "data/routes/dat" and 20 iterations.
   To change these arguments use the following flags.
   
      -a Airport File
      -r Route File
+     -i # of iterations
      
   Example Syntax: Change from airports.dat to airports_sample.dat
   
