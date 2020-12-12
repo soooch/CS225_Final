@@ -6,11 +6,11 @@
 ## Build and Usage
 
 ### Dijkstra's Algorithm
- In terminal:
- module unload llvm/6.0.1
- module load gcc/9.2.0
+ In terminal: 
+ module unload llvm/6.0.1 
+ module load gcc/9.2.0 
  
- 1. Make the file in the root directory
+ 1. Make the file in the root directory 
     make Dijkstra
  2. Run the executable
     ./bin/Dijkstra
