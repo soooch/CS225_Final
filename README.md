@@ -7,37 +7,42 @@
 
 ### Dijkstra's Algorithm
  In terminal: 
- module unload llvm/6.0.1 
- module load gcc/9.2.0 
  
- 1. Make the file in the root directory 
-    make Dijkstra
- 2. Run the executable
-    ./bin/Dijkstra
- The default arguments are "data/airports.dat" for airport data, "data/routes/dat" for route data, "ORD" for origin, and "EMD" for destination.
- To change these arguments use the following flags.
- -a Airport File
- -r Route File
- -o Origin airport (IATA Code)
- -d Destination file (IATA Code)
+    module unload llvm/6.0.1 
+    module load gcc/9.2.0 
  
- Example Syntax: Want to go from O'hare(ORD) to JFK airport(JFK)
- ./bin/Dijkstra -o ORD -d JFK
+ 1. Make the file in the root directory `make Dijkstra`
+ 2. Run the executable: `./bin/Dijkstra`
+
+The default arguments are "data/airports.dat" for airport data, "data/routes/dat" for route data, "ORD" for origin, and "EMD" for destination.  
+To change these arguments use the following flags:
+
+    -a Airport File  
+    -r Route File  
+    -o Origin airport (IATA Code)  
+    -d Destination airport (IATA Code)  
+ 
+ Example syntax to find shortest path from O'Hare (ORD) to JFK Airport (JFK)
+ 
+    ./bin/Dijkstra -o ORD -d JFK
  
  
  
 ### PageRank Algorithm
  In terminal:
- module unload llvm/6.0.1
- module load gcc/9.2.0
  
-  1. Make the file in the root directory
-    make Portrank
-  2. Run the executable
-    ./bin/PortRank
+    module unload llvm/6.0.1
+    module load gcc/9.2.0
+ 
+  1. Make the file in the root directory `make Portrank`
+  2. Run the executable `./bin/PortRank`
+  
   The default arguments are "data/airports.dat" for airport data and "data/routes/dat".
   To change these arguments use the following flags.
-  -a Airport File
-  -r Route File
-  Example Syntax: Want to go from O'hare(ORD) to JFK airport(JFK)
-  ./bin/PortRank -a data/airports_sample.dat -r data/routes_sample.dat
+  
+     -a Airport File
+     -r Route File
+     
+  Example Syntax: Want to go from O'Hare (ORD) to JFK Airport (JFK)
+  
+     ./bin/PortRank -a data/airports_sample.dat -r data/routes_sample.dat
