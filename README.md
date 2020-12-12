@@ -43,6 +43,6 @@ To change these arguments use the following flags:
      -a Airport File
      -r Route File
      
-  Example Syntax: Want to go from O'Hare (ORD) to JFK Airport (JFK)
+  Example Syntax: Change from airports.dat to airports_sample.dat
   
      ./bin/PortRank -a data/airports_sample.dat -r data/routes_sample.dat
