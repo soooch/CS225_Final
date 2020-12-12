@@ -30,8 +30,18 @@ Week of 11/30/2020-12/06/2020
 	airport which is given with the openflights dataset. Using these 
 	coordinates we were able to calculate distance. We decided to use
 	the Haversine formula to account for the curvature of the earth.
-	We also started working on a queue based traversal. 
+	We also started working on a queue based traversal. Had meeting with
+	our cool mentor!
 
 Week of 12/07/2020-12/11/2020
 
-	To be filled out.
+	Started off the week by changing some things to our FlightGraph and
+	MAKE file. No longer have a .cpp file for FlightGraph since it is now 
+	templated. We finished Dijkstra's algorithm and performed tests on
+	large and small datasets to make sure that it works. Then we proceeded
+	to work on our PageRank algorithm. This was quite difficult as we had
+	to conduct a lot of research on how PageRank actually works. Eventually
+	we finished PageRank and also tested it on smaller and bigger datasets.
+	After finishing up our programming we wrote the README, RESULTS and
+	filmed the final presentation. We also updated the development log for 
+	this week.
