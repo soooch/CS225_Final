@@ -3,14 +3,41 @@
 [Goals](docs/GOALS.pdf)  
 [Contract](docs/CONTRACT_skavi2.pdf)
 
-## Work to be done
+## Build and Usage
 
 ### Dijkstra's Algorithm
- * Fully working.
- * Potentially make different weighting functions.
- * Make it faster.
- * Maybe graphical output (not happening lol)
-
+ In terminal:
+ module unload llvm/6.0.1
+ module load gcc/9.2.0
+ 
+ 1. Make the file in the root directory
+    make Dijkstra
+ 2. Run the executable
+    ./bin/Dijkstra
+ The default arguments are "data/airports.dat" for airport data, "data/routes/dat" for route data, "ORD" for origin, and "EMD" for destination.
+ To change these arguments use the following flags.
+ -a Airport File
+ -r Route File
+ -o Origin airport (IATA Code)
+ -d Destination file (IATA Code)
+ 
+ Example Syntax: Want to go from O'hare(ORD) to JFK airport(JFK)
+ ./bin/Dijkstra -o ORD -d JFK
+ 
+ 
+ 
 ### PageRank Algorithm
- * Actually run PageRank
-   * Learn how to actually run Pagerank
+ In terminal:
+ module unload llvm/6.0.1
+ module load gcc/9.2.0
+ 
+  1. Make the file in the root directory
+    make Portrank
+  2. Run the executable
+    ./bin/PortRank
+  The default arguments are "data/airports.dat" for airport data and "data/routes/dat".
+  To change these arguments use the following flags.
+  -a Airport File
+  -r Route File
+  Example Syntax: Want to go from O'hare(ORD) to JFK airport(JFK)
+  ./bin/PortRank -a data/airports_sample.dat -r data/routes_sample.dat
