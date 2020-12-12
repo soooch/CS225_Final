@@ -3,7 +3,7 @@
 [Goals](docs/GOALS.pdf)  
 [Contract](docs/CONTRACT_skavi2.pdf)  
 [Development](https://github-dev.cs.illinois.edu/cs225-fa20/wkolcan2-guoyang2-bwl3-skavi2/blob/master/docs/Development%20Log.txt)  
-[Results](https://github-dev.cs.illinois.edu/cs225-fa20/wkolcan2-guoyang2-bwl3-skavi2/blob/master/docs/CS225%20Final%20Project%20Results.pdf)
+[Results](https://github-dev.cs.illinois.edu/cs225-fa20/wkolcan2-guoyang2-bwl3-skavi2/blob/master/docs/CS225%20Final%20Project%20Results.pdf)  
 [Presentation](https://www.youtube.com/watch?v=jCze5200xys)
 
 
