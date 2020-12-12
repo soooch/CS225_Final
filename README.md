@@ -3,8 +3,8 @@
 [Goals](docs/GOALS.pdf)  
 [Contract](docs/CONTRACT_skavi2.pdf)
 
-[Development](docs/Development Log.txt)
-[Results](docs/CS225 Final Project Results.pdf.pdf)
+[Development](docs/Development_Log.txt)
+[Results](docs/CS225_Final_Project_Results.pdf.pdf)
 
 
 
