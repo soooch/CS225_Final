@@ -28,10 +28,35 @@ int main(int argc, char * argv[]) {
 
   FlightGraph<Route> fg(airports);
   fg.addRoutes(routes);
-
   
+  std::vector<double> adjMat(fg.airports.size() * fg.airports.size(), 0.0);
+  
+  for (size_t i = 0; i < fg.airports.size(); i++) {
+    const auto & routes = fg.airports[i].routes;
+    std::vector<int> noDupRoutes;
+    noDupRoutes.reserve(routes.size());
+    std::transform(routes.cbegin(), routes.cend(), std::back_inserter(noDupRoutes), 
+                   [](Route r) -> int { return r.dest; });
+    std::sort(noDupRoutes.begin(), noDupRoutes.end());
+    noDupRoutes.erase(std::unique(noDupRoutes.begin(), noDupRoutes.end()), noDupRoutes.end());
 
+    for (int dest : noDupRoutes) {
+      adjMat[i * fg.airports.size() + dest] = 1.0 / noDupRoutes.size();
+    }
+  }
 
+  std::cout << std::endl;
+  for (size_t i = 0; i < fg.airports.size(); i++) {
+    for (size_t j = 0; j < fg.airports.size(); j++) {
+      std::cout << std::setprecision(4) << std::fixed << adjMat[i * fg.airports.size() + j] << " ";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+
+  for (size_t i = 0; i < fg.airports.size(); i++) {
+    std::cout << i << ": " << fg.airports[i].name << std::endl;
+  }
 
   return 0;
 }
