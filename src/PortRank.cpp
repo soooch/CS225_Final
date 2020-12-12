@@ -1,5 +1,6 @@
 #include "FlightGraph.h"
-#include <execution>
+// #include <execution>
+#include <cmath>
 #include <algorithm>
 #include <numeric>
 
@@ -130,7 +131,7 @@ int main(int argc, char * argv[]) {
   
   // print out ordered airports
   for (auto AP : ranks) {
-    std::cout << fg.airports[AP.first].name << ": " << AP.second << std::endl;
+    std::cout << fg.airports[AP.first].name << ": " << AP.second << std::endl; // Output list of airports
   }
 
 

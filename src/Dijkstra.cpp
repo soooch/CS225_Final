@@ -1,11 +1,10 @@
 #include "FlightGraph.h"
 #include <math.h>
 #include <queue>
-
 // Has more arguments than necessary to conform to possible future implementaion of weight function
 template <class Route>
 double distance_weight(const typename FlightGraph<Route>::Airport & c1, const typename FlightGraph<Route>::Airport & c2, const int stops, const std::string & equip) {
-    double lat1 = c1.latitude * M_PI/180; //Convert from degrees toradians for Trig functions
+    double lat1 = c1.latitude * M_PI/180; //Convert from degrees to radians for Trig functions
     double lat2 = c2.latitude * M_PI/180; 
     double deltaLat = (c2.latitude-c1.latitude) * M_PI/180; 
     double deltaLong = (c2.longitude-c1.longitude) * M_PI/180;

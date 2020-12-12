@@ -6,6 +6,7 @@ SRC_DIR  	:= src
 
 TARGETS 	:= PortRank Dijkstra
 
+
 all : $(TARGETS)
 
 clean:
