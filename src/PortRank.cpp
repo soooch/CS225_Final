@@ -28,7 +28,7 @@ int main(int argc, char * argv[]) {
     }
   }
 
-  int iterations = std::stoi(iterations_str);
+  int iterations = std::stoi(iterations_str); //# of iterations to do
 
   std::cout << "Using " << airports << " for airports file and " << routes << " for routes file." << std::endl;
   class Route {
@@ -45,7 +45,7 @@ int main(int argc, char * argv[]) {
   
   std::vector<double> M(N * N, 0.0);
   
-  for (size_t j = 0; j < N; j++) {
+  for (size_t j = 0; j < N; j++) { //Initialize Adjacency matrix
     const auto & routes = fg.airports[j].routes;
     std::vector<int> noDupRoutes;
     noDupRoutes.reserve(routes.size());
@@ -63,12 +63,12 @@ int main(int argc, char * argv[]) {
   
   std::for_each(M_hat.begin(), M_hat.end(), [d, N](double & val) { val = val * d + ((1.0 - d) / N); });
   
-  std::vector<double> R(N);
+  std::vector<double> R(N); //Set up initial distribution
   std::generate(R.begin(), R.end(), []() -> double {return (double)(std::rand() % 101) / 100.0;});
   double inv_norm = 1.0 / sqrt(std::inner_product(R.begin(), R.end(), R.begin(), 0.0));
   std::for_each(R.begin(), R.end(), [inv_norm](double & val) { val *= inv_norm; });
   
-  for (int iter = 0; iter < iterations; iter++) {
+  for (int iter = 0; iter < iterations; iter++) { //Iterate through matrix to converge towards real Rank values
     for (size_t i = 0; i < N; i++) {
       R[i] = std::inner_product(R.cbegin(), R.cend(), M.cbegin() + i * N, 0.0);
     }
@@ -95,14 +95,14 @@ int main(int argc, char * argv[]) {
   std::vector<std::pair<int, double>> ranks;
   ranks.reserve(N);
 
-  for (size_t i = 0; i < N; i++) {
+  for (size_t i = 0; i < N; i++) { //Push back rank pairs of airport and rank
     ranks.push_back(std::pair((int)i, R[i]));
   }
 
-  std::sort(ranks.begin(), ranks.end(), [](auto lhs, auto rhs){return lhs.second > rhs.second;});
+  std::sort(ranks.begin(), ranks.end(), [](auto lhs, auto rhs){return lhs.second > rhs.second;}); //Sort ranks by most popular to least popular airport
   
   for (auto AP : ranks) {
-    std::cout << fg.airports[AP.first].name << ": " << AP.second << std::endl;
+    std::cout << fg.airports[AP.first].name << ": " << AP.second << std::endl; // Output list of airports
   }
 
 
