@@ -22,7 +22,7 @@ To change these arguments use the following flags:
     -o Origin airport (IATA Code)  
     -d Destination airport (IATA Code)  
  
- Example syntax to find shortest path from O'Hare (ORD) to JFK Airport (JFK)
+ Example Syntax: Find shortest path from O'Hare (ORD) to JFK Airport (JFK)
  
     ./bin/Dijkstra -o ORD -d JFK
  
