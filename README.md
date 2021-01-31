@@ -1,4 +1,4 @@
-# Final Project | wkolcan2, guoyang2, bwl3, skavi2
+# Final Project | skavi2, wkolcan2, guoyang2, bwl3
 
 [Goals](docs/GOALS.pdf)  
 [Contract](docs/CONTRACT_skavi2.pdf)  
